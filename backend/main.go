@@ -1,11 +1,12 @@
 package main
 
 import (
-	_"fmt"
+	_ "fmt"
 	"user-auth/controllers"
 	"user-auth/initializers"
 	"user-auth/middleware"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,6 +18,8 @@ func init() {
 
 func main() {
 	r := gin.Default()
+    r.Use(cors.Default())
+
 	r.GET("/api", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "server running",
@@ -25,5 +28,6 @@ func main() {
 	r.POST("/api/signup", controllers.SignUp)
 	r.POST("/api/signin", controllers.SignIn)
 	r.GET("/api/profile", middleware.Auth, controllers.LoggedUser)
+
 	r.Run()
 }
