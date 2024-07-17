@@ -12,7 +12,6 @@ export default function UserInfo() {
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
-                console.log(cookies.token)
                 const response = await fetch(`${apiUrl}/api/profile`, {
                     method: 'GET',
                     headers: {
