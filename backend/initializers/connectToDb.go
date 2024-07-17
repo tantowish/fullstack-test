@@ -13,9 +13,9 @@ var DB *gorm.DB
 func ConnectToDb(){
 	var err error
 	dbName := os.Getenv("DB_NAME")
-	conn_url := fmt.Sprintf("user=%s host=%s port=%s sslmode=disable",
+	conn_url := fmt.Sprintf("user=%s password=%s host=%s port=%s sslmode=disable",
 		os.Getenv("DB_USER"),
-		// os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 	)
