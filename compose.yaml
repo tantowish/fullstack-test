@@ -1,0 +1,33 @@
+services:
+  goapp:
+    container_name: goapp
+    image: goapp:1.0.0
+    build:
+      context: ./backend
+      dockerfile: go.dockerfile
+    environment:
+      PORT: '8000'
+      SECRET_KEY: 'fs_test_key'
+      DB_NAME: 'fullstack_test_db'
+      DB_HOST: 'postgres'
+      DB_USER: 'postgres'
+      DB_PORT: '5432'
+      DB_PASSWORD: 'password'
+    ports:
+      - '8000:8000'
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+ pgdata: {}
