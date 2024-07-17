@@ -29,7 +29,7 @@ export default function SignInForm() {
     const router = useRouter();
     const { toast } = useToast()
     const [signingIn, setSigningIn] = useState<boolean>(false);
-    const [cookies, setCookie] = useCookies(['token']);
+    const [cookies, setCookie] = useCookies(['token', 'user']);
 
 
     useEffect(() => {
@@ -52,7 +52,6 @@ export default function SignInForm() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             setSigningIn(true);
-            console.log(values);
     
             const response = await fetch(`${apiUrl}/api/signin`, {
                 method: 'POST',
@@ -64,9 +63,8 @@ export default function SignInForm() {
     
             if (response.ok) {
                 const result = await response.json();
-                sessionStorage.setItem('user', JSON.stringify(result.data));
-                sessionStorage.setItem('token', result.token);
     
+                setCookie('user', result.data, { path: '/' });
                 setCookie('token', result.token, { path: '/' });
                 sessionStorage.setItem('loginMessage', 'Sign In success.');
                 router.push('/');
